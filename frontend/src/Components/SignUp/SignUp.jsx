@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import "./styles.css";
+import axios from "axios";
+import "./Signup.css";
+import { Link } from "react-router-dom";
 const SignUp = () => {
   const [data, setData] = useState({
     firstName: "",
@@ -19,21 +21,28 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(data);
-    // try {
-    //   const url = `http://localhost:8080/api/users`;
-    //   const { data: res } = await axios.post(url, data);
-    //   navigate("/login");
-    //   console.log(res.message);
-    // } catch (error) {
-    //   if (
-    //     error.response &&
-    //     error.response.status >= 400 &&
-    //     error.response.status <= 500
-    //   ) {
-    //     setError(error.response.data.message);
-    //   }
-    // }
+    if (data.password === data.confirmPassword) {
+      try {
+        const url = `http://localhost:8080/api/users`;
+        console.log("check");
+        console.log(data);
+        delete data.confirmPassword;
+        console.log(data);
+        const { data: res } = await axios.post(url, data);
+        //   navigate("/login");
+        console.log(res.message);
+      } catch (error) {
+        if (
+          error.response &&
+          error.response.status >= 400 &&
+          error.response.status <= 500
+        ) {
+          setError(error.response.data.message);
+        }
+      }
+    } else {
+      alert("Your password and Confirm password is not same");
+    }
   };
 
   return (
@@ -42,13 +51,13 @@ const SignUp = () => {
         <div className="signup_form_container">
           <div className="left">
             <h1>Welcome Back</h1>
-            {/* <Link to="/login">
-            <button type="button" className="white_btn">
-              Sign in
-            </button>
-          </Link> */}
+            <Link to="/login">
+              <button type="button" className="white_btn">
+                Login
+              </button>
+            </Link>
           </div>
-          <div className="right">
+          <div className="right_con">
             <form className="form_container" onSubmit={handleSubmit}>
               {/* <Link to="/login"> */}
               <button type="button" className="white___btn">
