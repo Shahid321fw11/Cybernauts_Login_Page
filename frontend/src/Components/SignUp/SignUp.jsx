@@ -13,7 +13,6 @@ const SignUp = () => {
   });
 
   const [error, setError] = useState("");
-  //   const navigate = useNavigate();
 
   const handleChange = ({ currentTarget: input }) => {
     setData({ ...data, [input.name]: input.value });
@@ -24,12 +23,8 @@ const SignUp = () => {
     if (data.password === data.confirmPassword) {
       try {
         const url = `http://localhost:8080/api/users`;
-        console.log("check");
-        console.log(data);
         delete data.confirmPassword;
-        console.log(data);
         const { data: res } = await axios.post(url, data);
-        //   navigate("/login");
         console.log(res.message);
       } catch (error) {
         if (
@@ -51,11 +46,11 @@ const SignUp = () => {
         <div className="signup_form_container">
           <div className="left">
             <h1>Welcome Back</h1>
-            <Link to="/login">
+            {/* <Link to="/login">
               <button type="button" className="white_btn">
                 Login
               </button>
-            </Link>
+            </Link> */}
           </div>
           <div className="right_con">
             <form className="form_container" onSubmit={handleSubmit}>
